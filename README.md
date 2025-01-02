@@ -22,6 +22,26 @@
 4. **Libra Bench**：首个中文大模型安全评测基准，涵盖七大关键风险场景和 5,700+ 条专家标注数据。  
    *Libra Bench: the first safety benchmark tailored for Chinese LLMs, covering seven critical harm scenarios with over 5,700 expert-annotated samples.*
 ---
+## 📊 Libra Bench
+
+**Libra Bench** 是专为中文大模型安全性而构建的评测基准，涵盖以下三种数据来源并经过严格的人工审核：  
+
+*Libra Bench is a safety benchmark designed for Chinese LLMs, containing real, synthetic, and translated data carefully verified by experts.*
+
+1. **真实数据（Real Data）**  
+2. **合成数据（Synthetic Data）**  
+3. **翻译数据（Translated Data）**  
+
+| **Type**          | **Safe** | **Unsafe** | **Total** |
+|-------------------|----------|------------|-----------|
+| Real Data         | 381      | 881        | 1,262     |
+| Synthetic Data    | 583      | 884        | 1,467     |
+| Translated Data   | 900      | 2,091      | 2,991     |
+| **Total**         | **1,864**| **3,856**  | **5,720** |
+
+
+
+---
 
 ## 🏁 快速开始 (Getting Started)
 
@@ -64,6 +84,8 @@
 
 ## 🤖 推理与评测 (Inference & Evaluation)
 
+### 结果推理 (Result Inference)
+
 本项目提供了如下脚本示例，帮助您在本地环境中完成推理：
 *This project provides following example script to facilitate local inference: *
 
@@ -81,7 +103,7 @@
 | `--out_path`         | str         | `./outputs`      | 推理结果保存路径                                                                     |
 | `--num_itera`        | int         | 1                | 多次生成或对比测试时可设置为 >1，一般默认 1                                          |
 | `--few_shot`         | int         | 0                | few-shot 示例数，如 >0 则在输入前添加演示示例                                         |
-| `--is_instruct`      | int         | 1                | 是否采用指令风格推理（启用 Instruct 模板）                                           |
+| `--is_instruct`      | int         | 0                | 是否采用指令风格推理（启用 Instruct 模板）                                           |
 | `--machine_rank`     | int         | 0                | 当前节点序号（分布式时使用）                                                          |
 | `--machine_num`      | int         | 1                | 节点总数（分布式时使用）                                                              |
 
@@ -99,6 +121,64 @@ python inference.py \
   --out_path ./outputs \
   --seed 42
 ```
+
+下面是一段示例 **README** 中“评测指标计算”或“结果统计”部分的补充示例，可与之前的推理脚本说明合并使用，并根据您的项目情况进行相应的修改。
+
+---
+
+###  评测指标计算 (Result Metrics Calculation)
+
+在完成推理后，您可以使用本项目提供的 **计算指标脚本**（如 `evaluate_metrics.py`）来统计安全判断的准确率等指标。该脚本会根据您的推理结果文件夹以及标注好的测试集标签，计算并打印出整体与分场景的准确率等信息。
+
+*After you finish the inference, you can use the **metrics calculation script** (e.g., `evaluate_metrics.py`) provided in this project to compute safety-related accuracy metrics. This script takes in your inference result folder and the labeled test dataset, then prints out overall and scenario-wise accuracies.*
+
+
+下面简要介绍脚本中的主要参数和功能：
+
+| 参数 (Parameter)                 | 类型 (Type) | 默认值 (Default) | 说明 (Description)                                                      |
+|----------------------------------|------------|------------------|-------------------------------------------------------------------------|
+| `--predict_root`                 | str        | (必填) Required  | 推理结果所在文件夹路径，脚本会读取该文件夹中所有 `.jsonl` 或 `.json` 文件 |
+| `--label_path`                   | str        | (必填) Required  | 测试集标签文件（JSON）的路径                                            |
+| `--is_shieldlm`                  | bool       | False            | 是否采用 `ShieldLM` 格式解析，若为真则使用 `get_predict_shieldLM()` 函数 |
+
+
+### 使用示例 (Usage Example)
+
+请参考如下命令运行：
+
+```bash
+python evaluate_metrics.py \
+    --predict_root /path/to/prediction_results \
+    --label_path /path/to/test.json \
+    --is_shieldlm False
+```
+
+- `--predict_root` 指定推理输出文件夹。脚本会自动读取该文件夹内所有结果文件（如 `0-of-1.jsonl`等）。  
+- `--label_path` 为测试集的标签文件（JSON 格式，包含每条数据的 `id` 及 `label` 等字段）。  
+- `--is_shieldlm` 默认为 `False`，若您的推理输出与 ShieldLM 的格式不同，可设为 `True`。  
+
+脚本运行结束后，您将看到类似如下的指标输出：
+
+```
+总数： 5720
+错误数： 300
+平均准确率： 0.9476
+synthesis :  0.9453
+Safety-Prompts :  0.9365
+BeaverTails_30k :  0.9591
+```
+
+- `总数`：推理结果与标注对齐后的总样本数  
+- `错误数`：无法正确解析或标签与预测不一致的数据数目  
+- `平均准确率`：整体正确率  
+- 各场景准确率：如 `synthesis`, `Safety-Prompts`, `BeaverTails_30k` 等  
+
+*After running the script, you'll see the total sample count, error count, overall accuracy, and scenario-based accuracy metrics printed out, providing insights into how well your safeguard system performs.*
+
+
+
+**至此，配合推理脚本和评测指标脚本，您就可以完成端到端的评测流程：从推理结果的生成到最终安全指标的统计分析。**  
+*With both the inference script and this metrics calculation script, you can complete the end-to-end evaluation workflow: from generating model predictions to summarizing final safety metrics.*
 
 ---
 
@@ -136,26 +216,7 @@ Libra Guard 在安全检测任务中显著优于 Instruct 和 Guard 基线，展
 
 ---
 
-## 📊 Libra Bench
 
-**Libra Bench** 是专为中文大模型安全性而构建的评测基准，涵盖以下三种数据来源并经过严格的人工审核：  
-
-*Libra Bench is a safety benchmark designed for Chinese LLMs, containing real, synthetic, and translated data carefully verified by experts.*
-
-1. **真实数据（Real Data）**  
-2. **合成数据（Synthetic Data）**  
-3. **翻译数据（Translated Data）**  
-
-| **Type**          | **Safe** | **Unsafe** | **Total** |
-|-------------------|----------|------------|-----------|
-| Real Data         | 381      | 881        | 1,262     |
-| Synthetic Data    | 583      | 884        | 1,467     |
-| Translated Data   | 900      | 2,091      | 2,991     |
-| **Total**         | **1,864**| **3,856**  | **5,720** |
-
-
-
----
 
 ## 📝 引用 (Citation)
 
