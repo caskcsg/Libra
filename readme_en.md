@@ -65,7 +65,7 @@ You can download and load the **Libra Bench** dataset from the Hugging Face Hub.
   "analyze": "safety analysis",
   "id": "id"
 }
-``}
+```
 
 ---
 
