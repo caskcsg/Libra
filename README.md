@@ -81,7 +81,7 @@
 | `--out_path`         | str         | `./outputs`      | 推理结果保存路径                                                                     |
 | `--num_itera`        | int         | 1                | 多次生成或对比测试时可设置为 >1，一般默认 1                                          |
 | `--few_shot`         | int         | 0                | few-shot 示例数，如 >0 则在输入前添加演示示例                                         |
-| `--is_instruct`      | int         | 0                | 是否采用指令风格推理（启用 Instruct 模板）                                           |
+| `--is_instruct`      | int         | 1                | 是否采用指令风格推理（启用 Instruct 模板）                                           |
 | `--machine_rank`     | int         | 0                | 当前节点序号（分布式时使用）                                                          |
 | `--machine_num`      | int         | 1                | 节点总数（分布式时使用）                                                              |
 
