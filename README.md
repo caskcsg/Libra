@@ -1,7 +1,7 @@
 # Libra Guard：面向中文大模型的安全护栏模型 (Libra Guard: Large Chinese-based Safeguard for AI Content)
 
 **Libra Guard** 是一款面向中文大型语言模型（LLM）的安全护栏模型。Libra Guard 采用两阶段渐进式训练流程，先利用可扩展的合成样本预训练，再使用高质量真实数据进行微调，最大化利用数据并降低对人工标注的依赖，并构建了首个针对中文 LLM 的安全基准 —— **Libra Bench**。实验表明，Libra Guard 在 Libra Bench 上的表现显著优于同类开源模型（如 ShieldLM等），在多个任务上可与先进商用模型（如 GPT-4o）接近，为中文 LLM 的安全治理提供了更强的支持与评测工具。
-
+![Libra Guard](https://github.com/caskcsg/Libra/blob/main/LibraGuard.png)
 ---
 
 
@@ -33,7 +33,7 @@
 | Translated Data   | 900      | 2,091      | 2,991     |
 | **Total**         | **1,864**| **3,856**  | **5,720** |
 
-
+![Libra Bench](https://github.com/caskcsg/Libra/blob/main/Libra-Test.png)
 
 ---
 
