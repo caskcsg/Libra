@@ -22,6 +22,7 @@
 4. **Libra Bench**：首个中文大模型安全评测基准，涵盖七大关键风险场景和 5,700+ 条专家标注数据。  
    *Libra Bench: the first safety benchmark tailored for Chinese LLMs, covering seven critical harm scenarios with over 5,700 expert-annotated samples.*
 ---
+
 ## 📊 Libra Bench
 
 **Libra Bench** 是专为中文大模型安全性而构建的评测基准，涵盖以下三种数据来源并经过严格的人工审核：  
@@ -103,7 +104,7 @@
 | `--out_path`         | str         | `./outputs`      | 推理结果保存路径                                                                     |
 | `--num_itera`        | int         | 1                | 多次生成或对比测试时可设置为 >1，一般默认 1                                          |
 | `--few_shot`         | int         | 0                | few-shot 示例数，如 >0 则在输入前添加演示示例                                         |
-| `--is_instruct`      | int         | 0                | 是否采用指令风格推理（启用 Instruct 模板）                                           |
+| `--is_instruct`      | int         | 1                | 是否采用指令风格推理（启用 Instruct 模板）                                           |
 | `--machine_rank`     | int         | 0                | 当前节点序号（分布式时使用）                                                          |
 | `--machine_num`      | int         | 1                | 节点总数（分布式时使用）                                                              |
 
@@ -114,7 +115,7 @@
 
 ```bash
 # 单机单卡场景
-python inference.py \
+python ./scripts/inference.py \
   --base_model ./models/Libra-Guard-7B \
   --data_path ./data/test.json \
   --batch_size 2 \
@@ -147,9 +148,9 @@ python inference.py \
 请参考如下命令运行：
 
 ```bash
-python evaluate_metrics.py \
-    --predict_root /path/to/prediction_results \
-    --label_path /path/to/test.json \
+python ./scripts/evaluate_metrics.py \
+    --predict_root ./outputs \
+    --label_path ./data/test.json \
     --is_shieldlm False
 ```
 
