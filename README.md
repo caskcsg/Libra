@@ -37,6 +37,7 @@
 | Translated Data   | 900      | 2,091      | 2,991     |
 | **Total**         | **1,864**| **3,856**  | **5,720** |
 
+
 ![Libra Bench](https://github.com/caskcsg/Libra/blob/main/Libra-Test.png)
 
 ---
