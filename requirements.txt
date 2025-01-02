@@ -1,0 +1,4 @@
+json_repair
+torch
+transformers>=4.37.0
+accelerate
