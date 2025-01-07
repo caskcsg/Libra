@@ -1,6 +1,10 @@
-# Libra Guard: Large Chinese-based Safeguard for AI Content
+# Libra: Large Chinese-based Safeguard for AI Content
 
-**Libra Guard** is a safeguard model designed for large Chinese language models (LLMs). Libra Guard employs a two-stage progressive training process, first utilizing scalable synthetic samples for pre-training, and then fine-tuning with high-quality real data. This approach maximizes data utilization while reducing reliance on manual annotation. Additionally, Libra Guard establishes the first safety benchmark specifically for Chinese LLMs — **Libra Bench**. Experiments demonstrate that Libra Guard significantly outperforms similar open-source models (such as ShieldLM) on Libra Bench and is competitive with advanced commercial models (like GPT-4o) across multiple tasks, providing stronger support and evaluation tools for the safety governance of Chinese LLMs.
+**Libra-Guard** is a safeguard model designed for large Chinese language models (LLMs). Libra-Guard employs a two-stage progressive training process, first utilizing scalable synthetic samples for pre-training, and then fine-tuning with high-quality real data. This approach maximizes data utilization while reducing reliance on manual annotation. Additionally, Libra-Guard establishes the first safety benchmark specifically for Chinese LLMs — **Libra-Test**. Experiments demonstrate that Libra-Guard significantly outperforms similar open-source models (such as ShieldLM) on Libra-Test and is competitive with advanced commercial models (like GPT-4o) across multiple tasks, providing stronger support and evaluation tools for the safety governance of Chinese LLMs.
+
+**Model:**  [Libra-Guard](https://huggingface.co/collections/caskcsg/libra-guard-67765779999dab7ca25180a2)
+
+**Dataset:**  [Libra-Test](https://huggingface.co/datasets/caskcsg/Libra-Test)
 
 ---
 
@@ -12,13 +16,13 @@
 
 3. **High Performance**: Significantly outperforms other open-source models in accuracy and remains competitive against closed-source models.
 
-4. **Libra Bench**: The first safety evaluation benchmark for Chinese large models, covering seven key risk scenarios and over 5,700 expert-annotated data points.
+4. **Libra-Test**: The first safety evaluation benchmark for Chinese large models, covering seven key risk scenarios and over 5,700 expert-annotated data points.
 
 ---
 
-## 📊 Libra Bench
+## 📊 Libra-Test
 
-**Libra Bench** is a safety evaluation benchmark specifically constructed for Chinese large models, encompassing the following three data sources and undergoing rigorous manual review:
+**Libra-Test** is a safety evaluation benchmark specifically constructed for Chinese large models, encompassing the following three data sources and undergoing rigorous manual review:
 
 1. **Real Data**
 2. **Synthetic Data**
@@ -53,7 +57,7 @@ Below are the brief steps to use this project and its provided scripts for infer
 
 ## 📥 Data Loading & Format
 
-You can download and load the **Libra Bench** dataset from the Hugging Face Hub. The format is as follows:
+You can download and load the **Libra-Test** dataset from the Hugging Face Hub. The format is as follows:
 
 ```json
 {
@@ -155,7 +159,7 @@ BeaverTails_30k :  0.9591
 
 ## 📊 Experimental Results
 
-In the following table, we evaluated various baseline models (Instruct models and Guard models) and compared their performance with **Libra Guard**.
+In the following table, we evaluated various baseline models (Instruct models and Guard models) and compared their performance with **Libra-Guard**.
 
 | **Models**                       | **Average** | **Synthesis** | **Safety-Prompts** | **BeaverTails\_30k** |
 |----------------------------------|-------------|---------------|--------------------|----------------------|
@@ -179,7 +183,7 @@ In the following table, we evaluated various baseline models (Instruct models an
 | Libra-Guard-Qwen2.5-14B-Instruct  | **0.8679**  | 0.8337        | 0.8597             | 0.9104               |
 | Libra-Guard-Yi-1.5-9B-Chat        | 0.8593      | 0.8200        | 0.8645             | 0.8933               |
 
-Libra Guard significantly outperforms Instruct and Guard baselines in safety detection tasks, demonstrating its strong performance across multiple benchmarks and data types.
+Libra-Guard significantly outperforms Instruct and Guard baselines in safety detection tasks, demonstrating its strong performance across multiple benchmarks and data types.
 
 ---
 
@@ -189,7 +193,7 @@ If this project is helpful to you, please cite the following papers:
 
 ```bibtex
 @article{chen2024libra,
-  title={Libra Guard: Large Chinese-based Safeguard for AI Content},
+  title={Libra: Large Chinese-based Safeguard for AI Content},
   author={Chen, Ziyang and Yu, Huimu and Wu, Xing and Hu, Songlin},
   journal={arXiv preprint arXiv:XXXX.XXXXX},
   year={2024}
