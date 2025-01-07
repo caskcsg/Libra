@@ -1,8 +1,8 @@
-# Libra Guard：面向中文大模型的安全护栏模型 (Libra Guard: Large Chinese-based Safeguard for AI Content)
+# Libra：面向中文大模型的安全护栏模型 (Libra: Large Chinese-based Safeguard for AI Content)
 
-**Libra Guard** 是一款面向中文大型语言模型（LLM）的安全护栏模型。Libra Guard 采用两阶段渐进式训练流程，先利用可扩展的合成样本预训练，再使用高质量真实数据进行微调，最大化利用数据并降低对人工标注的依赖，并构建了首个针对中文 LLM 的安全基准 —— **Libra Bench**。实验表明，Libra Guard 在 Libra Bench 上的表现显著优于同类开源模型（如 ShieldLM等），在多个任务上可与先进商用模型（如 GPT-4o）接近，为中文 LLM 的安全治理提供了更强的支持与评测工具。
+**Libra-Guard** 是一款面向中文大型语言模型（LLM）的安全护栏模型。Libra-Guard 采用两阶段渐进式训练流程，先利用可扩展的合成样本预训练，再使用高质量真实数据进行微调，最大化利用数据并降低对人工标注的依赖，并构建了首个针对中文 LLM 的安全基准 —— **Libra-Test**。实验表明，Libra-Guard 在 Libra-Test 上的表现显著优于同类开源模型（如 ShieldLM等），在多个任务上可与先进商用模型（如 GPT-4o）接近，为中文 LLM 的安全治理提供了更强的支持与评测工具。
 
-![Libra Guard](https://github.com/caskcsg/Libra/blob/main/LibraGuard.png)
+![Libra-Guard](https://github.com/caskcsg/Libra/blob/main/LibraGuard.png)
 
 ---
 
@@ -16,13 +16,13 @@
 
 3. **高性能表现**：在准确率上显著优于其它开源模型，对比闭源模型亦具有竞争力。  
 
-4. **Libra Bench**：首个中文大模型安全评测基准，涵盖七大关键风险场景和 5,700+ 条专家标注数据。  
+4. **Libra-Test**：首个中文大模型安全评测基准，涵盖七大关键风险场景和 5,700+ 条专家标注数据。  
 
 ---
 
-## 📊 Libra Bench
+## 📊 Libra-Test
 
-**Libra Bench** 是专为中文大模型安全性而构建的评测基准，涵盖以下三种数据来源并经过严格的人工审核：  
+**Libra-Test** 是专为中文大模型安全性而构建的评测基准，涵盖以下三种数据来源并经过严格的人工审核：  
 
 1. **真实数据（Real Data）**  
 2. **合成数据（Synthetic Data）**  
@@ -38,7 +38,7 @@
 | **Total**         | **1,864**| **3,856**  | **5,720** |
 
 
-![Libra Bench](https://github.com/caskcsg/Libra/blob/main/Libra-Test.png)
+![Libra-Test](https://github.com/caskcsg/Libra/blob/main/Libra-Test.png)
 
 ---
 
@@ -61,7 +61,7 @@
 
 ## 📥 数据加载与格式 (Data Loading & Format)
 
-您可以从 Hugging Face Hub下载并加载 **Libra Bench** 数据集，格式如下所示。  
+您可以从 Hugging Face Hub下载并加载 **Libra-Test** 数据集，格式如下所示。  
 
 ```json
 {
@@ -174,7 +174,7 @@ BeaverTails_30k :  0.9591
 
 ## 📊 实验结果 (Experimental Results)
 
-在以下表格中，我们对多种基线模型（Instruct 模型与 Guard 模型）进行了评测，并与 **Libra Guard** 的表现进行了对比。  
+在以下表格中，我们对多种基线模型（Instruct 模型与 Guard 模型）进行了评测，并与 **Libra-Guard** 的表现进行了对比。  
 
 | **Models**                       | **Average** | **Synthesis** | **Safety-Prompts** | **BeaverTails\_30k** |
 |----------------------------------|-------------|---------------|--------------------|----------------------|
@@ -198,7 +198,7 @@ BeaverTails_30k :  0.9591
 | Libra-Guard-Qwen2.5-14B-Instruct  | **0.8679**  | 0.8337        | 0.8597             | 0.9104               |
 | Libra-Guard-Yi-1.5-9B-Chat        | 0.8593      | 0.8200        | 0.8645             | 0.8933               |
 
-Libra Guard 在安全检测任务中显著优于 Instruct 和 Guard 基线，展示了其在多个基准和数据集类型上的强大性能。
+Libra-Guard 在安全检测任务中显著优于 Instruct 和 Guard 基线，展示了其在多个基准和数据集类型上的强大性能。
 
 
 ---
@@ -211,13 +211,13 @@ Libra Guard 在安全检测任务中显著优于 Instruct 和 Guard 基线，展
 
 ```bibtex
 @article{chen2024libra,
-  title={Libra Guard: Large Chinese-based Safeguard for AI Content},
+  title={Libra: Large Chinese-based Safeguard for AI Content},
   author={Chen, Ziyang and Yu, Huimu and Wu, Xing and Hu, Songlin},
   journal={arXiv preprint arXiv:XXXX.XXXXX},
   year={2024}
 }
 @inproceedings{chen2024libra,
-    title = "{L}ibra {G}uard: A Large Chinese-based Safeguard for AI Content",
+    title = "{L}ibra: A Large Chinese-based Safeguard for AI Content",
     author = "Chen, Ziyang and Yu, Huimu and Wu, Xing and Hu, Songlin",
     booktitle = "Proceedings of the XXXth Conference on Computational Linguistics",
     month = aug,
