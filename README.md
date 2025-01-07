@@ -4,7 +4,7 @@
 
 **模型:**  [Libra-Guard](https://huggingface.co/collections/caskcsg/libra-guard-67765779999dab7ca25180a2)
 
-**数据集:**  [Libra-Test](https://huggingface.co/datasets/caskcsg/Libra-Test)
+**评测集:**  [Libra-Test](https://huggingface.co/datasets/caskcsg/Libra-Test)
 
 ![Libra-Guard](https://github.com/caskcsg/Libra/blob/main/LibraGuard.png)
 
