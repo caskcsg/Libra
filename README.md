@@ -214,21 +214,11 @@ Libra-Guard 在安全检测任务中显著优于 Instruct 和 Guard 基线，展
 如果本项目对您有帮助，请引用以下论文：  
 
 ```bibtex
-@article{chen2024libra,
-  title={Libra: Large Chinese-based Safeguard for AI Content},
-  author={Chen, Ziyang and Yu, Huimu and Wu, Xing and Hu, Songlin},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
-  year={2024}
-}
-@inproceedings{chen2024libra,
-    title = "{L}ibra: A Large Chinese-based Safeguard for AI Content",
-    author = "Chen, Ziyang and Yu, Huimu and Wu, Xing and Hu, Songlin",
-    booktitle = "Proceedings of the XXXth Conference on Computational Linguistics",
-    month = aug,
-    year = "2024",
-    address = "City, Country",
-    publisher = "Association for Computational Linguistics",
-    doi = "10.18653/v1/2024.conll-XXX.XXX",
-    pages = "XXXX--XXXX",
+@misc{libra,
+    title = {Libra: Large Chinese-based Safeguard for AI Content},
+    url = {https://github.com/caskcsg/Libra/},
+    author= {Li, Ziyang and Yu, Huimu and Wu, Xing and Lin, Yuxuan and Liu, Dingqin and Hu, Songlin},
+    month = {January},
+    year = {2025}
 }
 ```
