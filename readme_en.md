@@ -6,6 +6,8 @@
 
 **Dataset:**  [Libra-Test](https://huggingface.co/datasets/caskcsg/Libra-Test)
 
+![Libra-Guard](https://github.com/caskcsg/Libra/blob/main/LibraGuard.png)
+
 ---
 
 ## ✨ Key Features
