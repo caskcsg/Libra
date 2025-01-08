@@ -18,13 +18,13 @@
 
 3. **High Performance**: Significantly outperforms other open-source models in accuracy and remains competitive against closed-source models.
 
-4. **Libra-Test**: The first safety evaluation benchmark for Chinese large models, covering seven key risk scenarios and over 5,700 expert-annotated data points.
+4. **Libra-Test**: The first safety evaluation benchmark for the safeguards of Chinese LLMs, covering seven key risk scenarios and over 5,700 expert-annotated data points.
 
 ---
 
 ## 📊 Libra-Test
 
-**Libra-Test** is a safety evaluation benchmark specifically constructed for Chinese large models, encompassing the following three data sources and undergoing rigorous manual review:
+**Libra-Test** is a safety evaluation benchmark specifically constructed for the safeguards of Chinese LLMs, encompassing the following three data sources and undergoing rigorous manual review:
 
 1. **Real Data**
 2. **Synthetic Data**
@@ -64,7 +64,8 @@ You can download and load the **Libra-Test** dataset from the Hugging Face Hub. 
 ```json
 {
   "source": "query source",
-  "category_name": "harmful category of query",
+  "category_name": "harmful category of query", 
+  "sub_category_name": "harmful subcategory of query",
   "question": "query",
   "response": "response",
   "label": "safety label",
@@ -122,7 +123,6 @@ Below is a brief introduction to the main parameters and functions in the script
 |--------------------|------|---------|--------------------------------------------------------------------|
 | `--predict_root`   | str  | (Required) | Path to the folder containing inference results; the script reads all `.jsonl` or `.json` files in this folder |
 | `--label_path`     | str  | (Required) | Path to the test set label file (JSON)                             |
-| `--is_shieldlm`    | bool | False   | Whether to parse using the `ShieldLM` format; if true, use `get_predict_shieldLM()` function |
 
 ### Usage Example
 
@@ -131,29 +131,32 @@ Please refer to the following command to run:
 ```bash
 python ./scripts/evaluate_metrics.py \
     --predict_root ./outputs \
-    --label_path ./data/test.json \
-    --is_shieldlm False
+    --label_path ./data/test.json
 ```
 
 - `--predict_root`: Specifies the inference output folder. The script will automatically read all result files in this folder (e.g., `0-of-1.jsonl`).
 - `--label_path`: Path to the test set label file (JSON format, containing fields like `id` and `label` for each data point).
-- `--is_shieldlm`: Defaults to `False`. If your inference output format differs from ShieldLM, set this to `True`.
 
-After the script finishes running, you will see output similar to the following metrics:
+After the script finishes running, you will see output similar to the following metrics (including the Accuracy and F1 scores of three different sources and their average):
 
 ```
-Total: 5720
-Errors: 300
-Average Accuracy: 0.9476
-synthesis :  0.9453
-Safety-Prompts :  0.9365
-BeaverTails_30k :  0.9591
+Real Data
+F1-Unsafe: 0.8983
+F1-Safe: 0.7739
+Accuracy: 0.8597
+Synthetic Data
+F1-Unsafe: 0.8606
+F1-Safe: 0.7939
+Accuracy: 0.8337
+Translated Data
+F1-Unsafe: 0.9359
+F1-Safe: 0.8513
+Accuracy: 0.9104
+Average
+F1-Unsafe: 0.8983
+F1-Safe: 0.8064
+Accuracy: 0.8679
 ```
-
-- `Total`: Total number of samples aligned with inference results and labels
-- `Errors`: Number of samples where parsing failed or labels do not match predictions
-- `Average Accuracy`: Overall accuracy
-- Accuracy per scenario: e.g., `synthesis`, `Safety-Prompts`, `BeaverTails_30k`, etc.
 
 **With the inference script and metric calculation script, you can complete the end-to-end evaluation process: from generating inference results to final safety metric statistical analysis.**
 
@@ -163,27 +166,31 @@ BeaverTails_30k :  0.9591
 
 In the following table, we evaluated various baseline models (Instruct models and Guard models) and compared their performance with **Libra-Guard**.
 
-| **Models**                       | **Average** | **Synthesis** | **Safety-Prompts** | **BeaverTails\_30k** |
-|----------------------------------|-------------|---------------|--------------------|----------------------|
-| **Instruct Models**              |             |               |                    |                      |
-| Qwen-14B-Chat                    | 0.6883      | 0.5787        | 0.6886             | 0.7977               |
-| Qwen2.5-0.5B-Instruct            | 0.6337      | 0.5740        | 0.6482             | 0.6790               |
-| Qwen2.5-1.5B-Instruct            | 0.6530      | 0.5719        | 0.6648             | 0.7222               |
-| Qwen2.5-3B-Instruct              | 0.7121      | 0.6360        | 0.7060             | 0.7944               |
-| Qwen2.5-7B-Instruct              | 0.6249      | 0.5392        | 0.5563             | 0.7793               |
-| Qwen2.5-14B-Instruct             | 0.7433      | 0.6810        | 0.6696             | 0.8793               |
-| Yi-1.5-9B-Chat                   | 0.5174      | 0.4097        | 0.4334             | 0.7091               |
-| **Guard Models**                 |             |               |                    |                      |
-| Llama-Guard                      | 0.3961      | 0.3388        | 0.2845             | 0.5650               |
-| ShieldGemma                      | 0.4403      | 0.4104        | 0.3154             | 0.5951               |
-| ShieldLM                         | 0.6569      | 0.6196        | 0.5341             | 0.8171               |
-| Libra-Guard-Qwen-14B-Chat        | 0.8648      | 0.8296        | 0.8534             | 0.9114               |
-| Libra-Guard-Qwen2.5-0.5B-Instruct | 0.8146      | 0.7905        | 0.8223             | 0.8311               |
-| Libra-Guard-Qwen2.5-1.5B-Instruct | 0.8392      | 0.7975        | 0.8376             | 0.8826               |
-| Libra-Guard-Qwen2.5-3B-Instruct   | 0.8475      | 0.8153        | 0.8391             | 0.8880               |
-| Libra-Guard-Qwen2.5-7B-Instruct   | 0.8524      | 0.8132        | 0.8471             | 0.8970               |
-| Libra-Guard-Qwen2.5-14B-Instruct  | **0.8679**  | 0.8337        | 0.8597             | 0.9104               |
-| Libra-Guard-Yi-1.5-9B-Chat        | 0.8593      | 0.8200        | 0.8645             | 0.8933               |
+| **Models**                              |                           |  **Average**  |                     | **Real Data**        | **Synthetic Data**   | **Translated Data**  |
+|-----------------------------------------|---------------------------|---------------|---------------------|----------------------|----------------------|----------------------|
+|                                         | **Accuracy**              | **$F_1$-Safe**| **$F_1$-Unsafe**    | **Accuracy**         | **Accuracy**         | **Accuracy**         |
+| **Closed-Source Models**                |                           |               |                     |                      |                      |                      |
+| GPT-4o                                  | 91.05%                    | 87.1%         | 93.04%              | 88.59%               | 89.78%               | 94.78%               |
+| Sonnet-3.5                              | 88.82%                    | 82.34%        | 91.77%              | 88.83%               | 84.46%               | 93.18%               |
+| **Instruct Models**                     |                           |               |                     |                      |                      |                      |
+| Qwen-14B-Chat                           | 68.83%                    | 30.55%        | 79.79%              | 68.86%               | 57.87%               | 79.77%               |
+| Qwen2.5-0.5B-Instruct                   | 63.37%                    | 6.47%         | 77.14%              | 64.82%               | 57.4%                | 67.9%                |
+| Qwen2.5-1.5B-Instruct                   | 65.3%                     | 34.48%        | 75.84%              | 66.48%               | 57.19%               | 72.22%               |
+| Qwen2.5-3B-Instruct                     | 71.21%                    | 49.06%        | 79.74%              | 70.6%                | 63.6%                | 79.44%               |
+| Qwen2.5-7B-Instruct                     | 62.49%                    | 59.96%        | 64.09%              | 55.63%               | 53.92%               | 77.93%               |
+| Qwen2.5-14B-Instruct                    | 74.33%                    | 65.99%        | 79.32%              | 66.96%               | 68.1%                | 87.93%               |
+| Yi-1.5-9B-Chat                          | 51.74%                    | 54.07%        | 47.31%              | 43.34%               | 40.97%               | 70.91%               |
+| **Guard Models**                        |                           |               |                     |                      |                      |                      |
+| Llama-Guard3-8B                         | 39.61%                    | 48.09%        | 26.1%               | 28.45%               | 33.88%               | 56.5%                |
+| ShieldGemma-9B                          | 44.03%                    | 54.51%        | 23.02%              | 31.54%               | 41.04%               | 59.51%               |
+| ShieldLM-Qwen-14B-Chat                  | 65.69%                    | 65.24%        | 65.23%              | 53.41%               | 61.96%               | 81.71%               |
+| Libra-Guard-Qwen-14B-Chat               | 86.48%                    | 80.58%        | 89.51%              | 85.34%               | 82.96%               | 91.14%               |
+| Libra-Guard-Qwen2.5-0.5B-Instruct       | 81.46%                    | 69.29%        | 86.26%              | 82.23%               | 79.05%               | 83.11%               |
+| Libra-Guard-Qwen2.5-1.5B-Instruct       | 83.93%                    | 77.13%        | 87.37%              | 83.76%               | 79.75%               | 88.26%               |
+| Libra-Guard-Qwen2.5-3B-Instruct         | 84.75%                    | 78.01%        | 88.13%              | 83.91%               | 81.53%               | 88.8%                |
+| Libra-Guard-Qwen2.5-7B-Instruct         | 85.24%                    | 79.41%        | 88.33%              | 84.71%               | 81.32%               | 89.7%                |
+| Libra-Guard-Qwen2.5-14B-Instruct        | **86.79%**                | **80.64%**    | **89.83%**          | 85.97%               | 83.37%               | 91.04%               |
+| Libra-Guard-Yi-1.5-9B-Chat              | 85.93%                    | 79.15%        | 89.2%               | 86.45%               | 82%                  | 89.33%               |
 
 Libra-Guard significantly outperforms Instruct and Guard baselines in safety detection tasks, demonstrating its strong performance across multiple benchmarks and data types.
 
@@ -197,7 +204,7 @@ If this project is helpful to you, please cite the following papers:
 @misc{libra,
     title = {Libra: Large Chinese-based Safeguard for AI Content},
     url = {https://github.com/caskcsg/Libra/},
-    author= {Li, Ziyang and Yu, Huimu and Wu, Xing and Lin, Yuxuan and Liu, Dingqin and Hu, Songlin},
+    author= {Chen, Ziyang and Yu, Huimu and Wu, Xing and Lin, Yuxuan and Liu, Dongqin and Hu, Songlin},
     month = {January},
     year = {2025}
 }
